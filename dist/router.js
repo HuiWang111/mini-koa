@@ -21,62 +21,69 @@ class Router {
         ];
         this._callbacks = new Map();
     }
-    get(url, callback) {
+    get(path, callback) {
         return __awaiter(this, void 0, void 0, function* () {
-            const key = `GET ${url}`;
+            const key = `GET ${path}`;
             let callbacks = this._callbacks.get(key);
             if (!callbacks) {
                 callbacks = [];
             }
             callbacks.push(callback);
+            this._callbacks.set(key, callbacks);
         });
     }
-    post(url, callback) {
+    post(path, callback) {
         return __awaiter(this, void 0, void 0, function* () {
-            const key = `POST ${url}`;
+            const key = `POST ${path}`;
             let callbacks = this._callbacks.get(key);
             if (!callbacks) {
                 callbacks = [];
             }
             callbacks.push(callback);
+            this._callbacks.set(key, callbacks);
         });
     }
-    patch(url, callback) {
+    patch(path, callback) {
         return __awaiter(this, void 0, void 0, function* () {
-            const key = `PATCH ${url}`;
+            const key = `PATCH ${path}`;
             let callbacks = this._callbacks.get(key);
             if (!callbacks) {
                 callbacks = [];
             }
             callbacks.push(callback);
+            this._callbacks.set(key, callbacks);
         });
     }
-    put(url, callback) {
+    put(path, callback) {
         return __awaiter(this, void 0, void 0, function* () {
-            const key = `PUT ${url}`;
+            const key = `PUT ${path}`;
             let callbacks = this._callbacks.get(key);
             if (!callbacks) {
                 callbacks = [];
             }
             callbacks.push(callback);
+            this._callbacks.set(key, callbacks);
         });
     }
-    delete(url, callback) {
+    delete(path, callback) {
         return __awaiter(this, void 0, void 0, function* () {
-            const key = `DELETE ${url}`;
+            const key = `DELETE ${path}`;
             let callbacks = this._callbacks.get(key);
             if (!callbacks) {
                 callbacks = [];
             }
             callbacks.push(callback);
+            this._callbacks.set(key, callbacks);
         });
     }
     routes() {
         return (ctx, next) => __awaiter(this, void 0, void 0, function* () {
-            const { url, method } = ctx.request;
-            const key = `${method} ${url}`;
+            const { path, method } = ctx.request;
+            const key = `${method} ${path}`;
             const callbacks = this._callbacks.get(key);
             if (!callbacks) {
+                ctx.response.status = 404;
+                ctx.body = 'Not Found';
                 return;
             }
             callbacks.forEach(cb => cb(ctx));

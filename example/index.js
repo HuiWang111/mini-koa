@@ -18,8 +18,6 @@ app.use(async (ctx, next) => {
     console.info(2);
     await next();
     console.info(3);
-
-    ctx.body = 'this is mini-koa';
 });
 
 app.use(router.routes());

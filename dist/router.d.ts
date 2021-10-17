@@ -3,10 +3,10 @@ export declare class Router {
     private _methods;
     private _callbacks;
     constructor();
-    get(url: string, callback: RouterCallback): Promise<void>;
-    post(url: string, callback: RouterCallback): Promise<void>;
-    patch(url: string, callback: RouterCallback): Promise<void>;
-    put(url: string, callback: RouterCallback): Promise<void>;
-    delete(url: string, callback: RouterCallback): Promise<void>;
+    get(path: string, callback: RouterCallback): Promise<void>;
+    post(path: string, callback: RouterCallback): Promise<void>;
+    patch(path: string, callback: RouterCallback): Promise<void>;
+    put(path: string, callback: RouterCallback): Promise<void>;
+    delete(path: string, callback: RouterCallback): Promise<void>;
     routes(): Middleware;
 }

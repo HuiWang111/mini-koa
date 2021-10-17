@@ -17,8 +17,8 @@ export class Router {
         this._callbacks = new Map();
     }
 
-    public async get(url: string, callback: RouterCallback): Promise<void> {
-        const key = `GET ${url}`;
+    public async get(path: string, callback: RouterCallback): Promise<void> {
+        const key = `GET ${path}`;
         let callbacks: RouterCallback[] | undefined = this._callbacks.get(key);
 
         if (!callbacks) {
@@ -26,10 +26,11 @@ export class Router {
         }
 
         callbacks.push(callback);
+        this._callbacks.set(key, callbacks);
     }
 
-    public async post(url: string, callback: RouterCallback): Promise<void> {
-        const key = `POST ${url}`;
+    public async post(path: string, callback: RouterCallback): Promise<void> {
+        const key = `POST ${path}`;
         let callbacks: RouterCallback[] | undefined = this._callbacks.get(key);
 
         if (!callbacks) {
@@ -37,10 +38,11 @@ export class Router {
         }
 
         callbacks.push(callback);
+        this._callbacks.set(key, callbacks);
     }
 
-    public async patch(url: string, callback: RouterCallback): Promise<void> {
-        const key = `PATCH ${url}`;
+    public async patch(path: string, callback: RouterCallback): Promise<void> {
+        const key = `PATCH ${path}`;
         let callbacks: RouterCallback[] | undefined = this._callbacks.get(key);
 
         if (!callbacks) {
@@ -48,10 +50,11 @@ export class Router {
         }
 
         callbacks.push(callback);
+        this._callbacks.set(key, callbacks);
     }
 
-    public async put(url: string, callback: RouterCallback): Promise<void> {
-        const key = `PUT ${url}`;
+    public async put(path: string, callback: RouterCallback): Promise<void> {
+        const key = `PUT ${path}`;
         let callbacks: RouterCallback[] | undefined = this._callbacks.get(key);
 
         if (!callbacks) {
@@ -59,10 +62,11 @@ export class Router {
         }
 
         callbacks.push(callback);
+        this._callbacks.set(key, callbacks);
     }
 
-    public async delete(url: string, callback: RouterCallback): Promise<void> {
-        const key = `DELETE ${url}`;
+    public async delete(path: string, callback: RouterCallback): Promise<void> {
+        const key = `DELETE ${path}`;
         let callbacks: RouterCallback[] | undefined = this._callbacks.get(key);
 
         if (!callbacks) {
@@ -70,16 +74,19 @@ export class Router {
         }
 
         callbacks.push(callback);
+        this._callbacks.set(key, callbacks);
     }
 
     public routes(): Middleware {
         return async (ctx: Context, next: Dispatch): Promise<void> => {
-            const { url, method } = ctx.request;
+            const { path, method } = ctx.request;
 
-            const key = `${method} ${url}`;
+            const key = `${method} ${path}`;
             const callbacks = this._callbacks.get(key);
 
             if (!callbacks) {
+                ctx.response.status = 404;
+                ctx.body = 'Not Found';
                 return;
             }
 
