@@ -2,7 +2,7 @@
 import { IncomingMessage, IncomingHttpHeaders } from 'http';
 export declare class Request {
     private _req;
-    constructor(req: any);
+    constructor(req: IncomingMessage);
     get req(): IncomingMessage;
     get headers(): IncomingHttpHeaders;
     set headers(val: IncomingHttpHeaders);

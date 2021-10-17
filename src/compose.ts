@@ -1,6 +1,6 @@
 import { Middleware } from './interface'
 
-export function compose(middlewares: Middleware[]) {
+export function compose(middlewares: Middleware[]): (ctx: any) => Promise<Middleware | void> {
     if (!Array.isArray(middlewares)) {
         Promise.reject(new Error('middlewares must be an array'));
     }
@@ -8,7 +8,8 @@ export function compose(middlewares: Middleware[]) {
         if (typeof middleware !== 'function') Promise.reject(new Error('middleware must be function'));
     }
 
-    return (ctx: any) => {
+    return (ctx: any): Promise<Middleware | void> => {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         return dispatch(0);
 
         function dispatch(i: number): Promise<Middleware | void> {

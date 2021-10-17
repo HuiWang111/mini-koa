@@ -39,7 +39,7 @@ export class Koa {
 
             fn(ctx);
         })
-        .listen(...args);
+            .listen(...args);
 
         return this;
     }

@@ -1,21 +1,29 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const Koa = require('../dist').default;
+const { Router } = require('../dist');
+const controller = require('./controller');
 
 const app = new Koa();
+const router = new Router();
+
+controller(router);
 
 app.use(async (ctx, next) => {
-    console.log(1);
+    console.info(1);
     await next();
-    console.log(4);
+    console.info(4);
 });
 
 app.use(async (ctx, next) => {
-    console.log(2);
+    console.info(2);
     await next();
-    console.log(3);
+    console.info(3);
 
     ctx.body = 'this is mini-koa';
 });
 
+app.use(router.routes());
+
 app.listen(3001, () => {
-    console.log('server listen on 3001');
+    console.info('server listen on 3001');
 });

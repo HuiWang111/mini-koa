@@ -8,7 +8,7 @@ import { format } from 'url';
 export class Request {
     private _req: IncomingMessage;
 
-    constructor(req) {
+    constructor(req: IncomingMessage) {
         this._req = req;
     }
 

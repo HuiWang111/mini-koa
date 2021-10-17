@@ -4,7 +4,8 @@
     "description": "",
     "main": "src/index.js",
     "scripts": {
-        "build:es": "tsc --declaration --downlevelIteration --skipLibCheck --module es2015 --target es2015 --outDir dist",
+        "build": "npm run build:cjs",
+        "build:esm": "tsc --declaration --downlevelIteration --skipLibCheck --module es2015 --target es2015 --outDir dist",
         "build:cjs": "tsc --declaration --downlevelIteration --skipLibCheck --module commonjs --target es2015 --outDir dist",
         "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
         "start": "node example/index.js"
